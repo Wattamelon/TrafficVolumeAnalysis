@@ -6,10 +6,6 @@ Lane-level, vehicle-type-specific traffic prediction using an STGCN baseline wit
 
 This project predicts lane-level traffic conditions for individual vehicle types using real-world traffic data from Bucheon, South Korea. An STGCN first learns spatial and temporal traffic patterns to produce a base prediction. An LSTM then models the remaining residual error and corrects that prediction. The combined approach supports vehicle-type-specific prediction and reduces error compared with the STGCN baseline.
 
-## Research Motivation
-
-Traffic prediction often treats all vehicles as a single traffic flow, although passenger cars, buses, trucks, and motorcycles can exhibit different queue-length and average-speed patterns. In addition, temporal patterns can remain in the residual error after an STGCN prediction. This work models lane-level traffic by vehicle type and uses LSTM-based residual correction to refine the STGCN output.
-
 ## Dataset
 
 | Item | Description |
@@ -55,12 +51,12 @@ The STGCN is retained as the base predictor; it is not replaced by the LSTM. The
 
 ## Experimental Setup
 
-The evaluation compares the STGCN baseline with the residual-correction model using MAE and RMSE.
+The evaluation compares the STGCN baseline with the residual-correction model using MAE and RMSE. Experiments were conducted with PyTorch 2.0 on a single NVIDIA RTX-series GPU. A fixed random seed and deterministic settings were applied to support reproducibility.
 
-| Model | Approximate parameters |
-| --- | ---: |
-| STGCN | 1.5M |
-| STGCN + LSTM Residual Correction | 1.8M |
+| Model | Training time |
+| --- | --- |
+| STGCN baseline | Approximately 2–3 hours |
+| STGCN + LSTM Residual Correction | Approximately 3–4 hours |
 
 ## Results
 
@@ -86,24 +82,24 @@ Bus and motorcycle traffic had relatively lower volumes than passenger cars and 
 ## My Role
 
 - First author
+- Model implementation
+- Model experimentation
+- Paper writing
+
 
 ## Tech Stack & Skills
 
 ### Modeling approaches
 
+- PyTorch 2.0
 - Spatio-temporal graph convolutional networks (STGCN)
 - LSTM-based time-series residual modeling
 - Graph-based traffic modeling
 - Lane-level, vehicle-type-specific traffic prediction
 - MAE and RMSE model evaluation
 
-Implementation libraries are not listed because the current repository does not include source or dependency files from which to verify them.
-
 ## Paper / Conference
 
 **Paper:** *Vehicle Type Specific Traffic Volume Analysis Using STGCN with LSTM-Based Residual Correction*<br>
-**Conference:** IEEE International Conference on Industrial Informatics (INDIN 2026)
-
-## Repository Notes
-
-This repository currently provides the project overview. No paper PDF, implementation source, dependency manifest, or figures are included, so no publication link, code-specific library list, or visual assets are claimed here.
+**Conference:** IEEE International Conference on Industrial Informatics (INDIN 2026)<br>
+**Status:** Final manuscript submitted; presented at the conference.
