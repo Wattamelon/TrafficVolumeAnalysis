@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Private data and derived arrays
+data/
+*.npy
+*.npz
+*.parquet
+*.pdf
+
+# Training artifacts
+outputs/
+checkpoints/
+*.pt
+*.pth
+
+# Local scratch files
+tmp/

@@ -40,14 +40,37 @@ Traffic Data
     ↓
 Base Prediction
     ↓
-Residual Error Modeling
+Past Residual Sequence
     ↓
-LSTM-based Residual Correction
+Average Pooling to 439 Connectivity-Based Clusters
+    ↓
+Cluster-LSTM Residual Correction
+    ↓
+Broadcast Correction to Lane Nodes
     ↓
 Final Prediction
 ```
 
-The STGCN is retained as the base predictor; it is not replaced by the LSTM. The LSTM predicts residual errors left by the base prediction, which are added back to form the final result.
+The STGCN is retained as the base predictor; it is not replaced by the LSTM. Residuals from 1,370 lane nodes are average-pooled into 439 connectivity-based clusters. A cluster-specific LSTM predicts the correction, which is broadcast back to lane nodes and added to the STGCN output.
+
+## Code
+
+The public reference implementation retains the paper's baseline and proposed architecture while excluding private traffic data, checkpoints, and exploratory experiment branches.
+
+```text
+src/models/stgcn.py                 # STGCN baseline
+src/models/residual_stgcn_lstm.py   # STGCN + Cluster-LSTM correction
+src/train.py                        # Baseline/proposed training entry point
+src/evaluate.py                     # MAE and RMSE evaluation
+examples/synthetic_data_demo.py     # Runnable smoke test without private data
+```
+
+```bash
+pip install -r requirements.txt
+python examples/synthetic_data_demo.py
+```
+
+Private training arrays are intentionally excluded. Their expected layout is documented in [docs/data_format.md](docs/data_format.md).
 
 ## Experimental Setup
 
@@ -101,5 +124,6 @@ Bus and motorcycle traffic had relatively lower volumes than passenger cars and 
 ## Paper / Conference
 
 **Paper:** *Vehicle Type Specific Traffic Volume Analysis Using STGCN with LSTM-Based Residual Correction*<br>
+**Authors:** Seongon Moon, Jongseok Min, Byeongyoon An, Junyeong Lim, and Jinho Lee<br>
 **Conference:** IEEE International Conference on Industrial Informatics (INDIN 2026)<br>
 **Status:** Final manuscript submitted; presented at the conference.
